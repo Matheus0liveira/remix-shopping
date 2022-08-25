@@ -6,11 +6,10 @@ import { UserDetails } from "~/features/users";
 export default function () {
   return (
     <>
-      <Header />
       {/* <ProductItem />
       <ProductDetails open={false} close={console.log} />
       <Cart open={false} close={console.log} /> */}
-      <UserDetails />
+      {/* <UserDetails /> */}
     </>
   );
 }

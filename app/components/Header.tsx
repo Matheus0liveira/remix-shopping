@@ -4,6 +4,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { MenuAlt1Icon, XIcon } from "@heroicons/react/outline";
 
 import { classNames } from "~/shared";
+import { Link, useLocation } from "@remix-run/react";
 
 const user = {
   avatar_url: "https://avatars.githubusercontent.com/u/58826355?v=4",
@@ -11,16 +12,19 @@ const user = {
 };
 
 export const navigation = [
-  { name: "Products", href: "#", current: true },
-  { name: "Cart", href: "#", current: false },
+  { name: "Products", to: "", current: true },
+  { name: "Cart", to: "cart", current: false },
 ];
 export const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
+  { name: "Your Profile", to: "user" },
+  { name: "Sign out", to: "#" },
 ];
 
 export function Header() {
+  const { pathname } = useLocation();
+
+  console.log(pathname);
+
   return (
     <Disclosure as="nav" className="flex-shrink-0 bg-indigo-600">
       {({ open }) => (
@@ -29,13 +33,13 @@ export function Header() {
             <div className="relative flex items-center justify-between h-16">
               {/* Logo section */}
               <div className="flex items-center px-2 lg:px-0 xl:w-64">
-                <div className="flex-shrink-0">
+                <Link to="/" className="flex-shrink-0">
                   <img
                     className="h-8 w-auto"
                     src="https://tailwindui.com/img/logos/workflow-mark-indigo-300.svg"
                     alt="Workflow"
                   />
-                </div>
+                </Link>
               </div>
 
               {/* Search section */}
@@ -63,14 +67,16 @@ export function Header() {
                 <div className="flex items-center justify-end">
                   <div className="flex">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.to}
                         className="px-3 py-2 rounded-md text-sm font-medium text-indigo-200 hover:text-white"
-                        aria-current={item.current ? "page" : undefined}
+                        aria-current={
+                          pathname.includes(item.to) ? "page" : undefined
+                        }
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                   {/* Profile dropdown */}
@@ -98,15 +104,15 @@ export function Header() {
                         {userNavigation.map((item) => (
                           <Menu.Item key={item.name}>
                             {({ active }) => (
-                              <a
-                                href={item.href}
+                              <Link
+                                to={item.to}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
                               >
                                 {item.name}
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         ))}
@@ -123,15 +129,10 @@ export function Header() {
               {navigation.map((item) => (
                 <Disclosure.Button
                   key={item.name}
-                  as="a"
-                  href={item.href}
-                  className={classNames(
-                    item.current
-                      ? "text-white bg-indigo-800"
-                      : "text-indigo-200 hover:text-indigo-100 hover:bg-indigo-600",
-                    "block px-3 py-2 rounded-md text-base font-medium"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
+                  as={Link}
+                  to={item.to}
+                  className="text-indigo-200 hover:text-indigo-100 hover:bg-indigo-600 block px-3 py-2 rounded-md text-base font-medium"
+                  aria-current={pathname.includes(item.to) ? "page" : undefined}
                 >
                   {item.name}
                 </Disclosure.Button>
@@ -142,8 +143,8 @@ export function Header() {
                 {userNavigation.map((item) => (
                   <Disclosure.Button
                     key={item.name}
-                    as="a"
-                    href={item.href}
+                    as={Link}
+                    to={item.to}
                     className="block px-3 py-2 rounded-md text-base font-medium text-indigo-200 hover:text-indigo-100 hover:bg-indigo-600"
                   >
                     {item.name}
