@@ -5,6 +5,7 @@ import { StarIcon } from "@heroicons/react/solid";
 import { classNames } from "~/shared";
 
 const product = {
+  id: Math.random(),
   name: "Basic Tee 6-Pack ",
   price: "$192",
   rating: 3.9,
@@ -136,7 +137,10 @@ export function ProductDetails({ open, close }: ProductDetailsProps) {
                           Product options
                         </h3>
 
-                        <form>
+                        <form
+                          action={`/products/${product.id}/cart/new`}
+                          method="POST"
+                        >
                           <button
                             type="submit"
                             className="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"

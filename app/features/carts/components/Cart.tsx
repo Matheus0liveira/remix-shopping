@@ -7,7 +7,7 @@ const products = [
   {
     id: 1,
     name: "Throwback Hip Bag",
-    href: "#",
+    href: "/products/1/details",
     price: "$90.00",
     quantity: 1,
     imageSrc:
@@ -18,7 +18,7 @@ const products = [
   {
     id: 2,
     name: "Medium Stuff Satchel",
-    href: "#",
+    href: "/products/1/details",
     price: "$32.00",
     quantity: 1,
     imageSrc:

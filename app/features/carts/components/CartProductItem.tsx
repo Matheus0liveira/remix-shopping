@@ -1,3 +1,5 @@
+import { Link } from "@remix-run/react";
+
 export type CartProductItemProps = {
   product: {
     id: number;
@@ -25,7 +27,7 @@ export function CartProductItem({ product }: CartProductItemProps) {
         <div>
           <div className="flex justify-between text-base font-medium text-gray-900">
             <h3>
-              <a href={product.href}> {product.name} </a>
+              <Link to={product.href}> {product.name} </Link>
             </h3>
             <p className="ml-4">{product.price}</p>
           </div>

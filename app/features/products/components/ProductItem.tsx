@@ -1,17 +1,32 @@
-export function ProductItem() {
-  return (
-    <div className="bg-white">
-      <div className="max-w-2xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-          Customers also purchased
-        </h2>
+import { Link } from "@remix-run/react";
+import { classNames } from "~/shared";
 
-        <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+export type ProductItemProps = {
+  title: string;
+  price: string;
+  promoPrice?: string;
+  imageSrc: string;
+  imageAlt: string;
+  href?: string;
+};
+
+export function ProductItem({
+  imageAlt,
+  imageSrc,
+  price,
+  promoPrice,
+  title,
+  href,
+}: ProductItemProps) {
+  return (
+    <Link to={href || ""} prefetch="intent">
+      <div className="bg-white">
+        <div className="mt-6">
           <div className="group relative">
             <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
               <img
-                src="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-                alt="Front of men&#039;s Basic Tee in black."
+                src={imageSrc}
+                alt={imageAlt}
                 className="w-full h-full object-center object-cover lg:w-full lg:h-full"
               />
             </div>
@@ -23,16 +38,27 @@ export function ProductItem() {
                       aria-hidden="true"
                       className="absolute inset-0"
                     ></span>
-                    Basic Tee
+                    {title}
                   </a>
                 </h3>
-                <p className="mt-1 text-sm text-gray-500">Black</p>
               </div>
-              <p className="text-sm font-medium text-gray-900">$35</p>
+              <div className={classNames("text-sm font-medium text-gray-900")}>
+                {!!promoPrice && (
+                  <span
+                    className={classNames(
+                      "mr-2 text-slate-500",
+                      promoPrice ? "line-through" : "no-underline"
+                    )}
+                  >
+                    {price}
+                  </span>
+                )}
+                <span>{promoPrice ?? price}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

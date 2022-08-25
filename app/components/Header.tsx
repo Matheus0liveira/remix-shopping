@@ -13,7 +13,7 @@ const user = {
 
 export const navigation = [
   { name: "Products", to: "", current: true },
-  { name: "Cart", to: "cart", current: false },
+  { name: "Cart", to: "products/cart", current: false },
 ];
 export const userNavigation = [
   { name: "Your Profile", to: "user" },
@@ -22,8 +22,6 @@ export const userNavigation = [
 
 export function Header() {
   const { pathname } = useLocation();
-
-  console.log(pathname);
 
   return (
     <Disclosure as="nav" className="flex-shrink-0 bg-indigo-600">
