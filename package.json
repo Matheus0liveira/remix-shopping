@@ -11,9 +11,12 @@
     "generate:css": "npx tailwindcss -i ./app/styles/tailwind.css -o ./app/tailwind.css"
   },
   "dependencies": {
+    "@headlessui/react": "^1.6.6",
+    "@heroicons/react": "v1",
     "@remix-run/node": "^1.6.8",
     "@remix-run/react": "^1.6.8",
     "@remix-run/vercel": "^1.6.8",
+    "@tailwindcss/aspect-ratio": "^0.4.0",
     "@vercel/node": "^2.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

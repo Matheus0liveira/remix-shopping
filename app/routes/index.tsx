@@ -1,3 +1,10 @@
+import { ProductDetails, ProductItem } from "~/features/products";
+
 export default function () {
-  return <h1>Hello world!</h1>;
+  return (
+    <>
+      <ProductItem />
+      <ProductDetails open close={console.log} />
+    </>
+  );
 }
