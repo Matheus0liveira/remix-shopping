@@ -8,29 +8,37 @@
     "dev": "run-p \"dev:*\"",
     "dev:css": "npm run generate:css -- --watch",
     "dev:remix": "remix dev",
-    "generate:css": "npx tailwindcss -i ./app/styles/tailwind.css -o ./app/tailwind.css"
+    "generate:css": "npx tailwindcss -i ./app/styles/tailwind.css -o ./app/tailwind.css",
+    "db:seed": "npx ts-node ./prisma/seeds/index.ts"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "v1",
+    "@prisma/client": "^4.2.1",
     "@remix-run/node": "^1.6.8",
     "@remix-run/react": "^1.6.8",
     "@remix-run/vercel": "^1.6.8",
     "@tailwindcss/aspect-ratio": "^0.4.0",
+    "@tailwindcss/forms": "^0.5.2",
     "@vercel/node": "^2.4.4",
+    "bcrypt": "^5.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.4.0",
     "@remix-run/dev": "^1.6.8",
     "@remix-run/eslint-config": "^1.6.8",
     "@remix-run/serve": "^1.6.8",
+    "@types/bcrypt": "^5.0.0",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "autoprefixer": "^10.4.8",
     "eslint": "^8.20.0",
     "npm-run-all": "^4.1.5",
+    "prisma": "^4.2.1",
     "tailwindcss": "^3.1.8",
+    "ts-node": "^10.9.1",
     "typescript": "^4.7.4"
   },
   "engines": {
