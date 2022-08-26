@@ -1,12 +1,11 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { useLoaderData, useNavigate } from "@remix-run/react";
 import type { Type } from "~/features/products";
+import { API } from "~/features/products";
 import { ProductDetails } from "~/features/products";
-import { db } from "~/utils/db.server";
-export const loader = async ({ params }: LoaderArgs) => {
-  const { productId: id } = params;
 
-  const product = await db.products.findUnique({ where: { id } });
+export const loader = async ({ params }: LoaderArgs) => {
+  const product = await API.productsService.findOne(params.productId!);
 
   if (!product) throw new Response("Product Not Found", { status: 404 });
 

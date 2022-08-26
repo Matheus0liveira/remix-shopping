@@ -2,6 +2,7 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { CartProductItem } from "./CartProductItem";
+import { useToggleModal } from "~/hooks";
 
 const products = [
   {
@@ -33,7 +34,8 @@ export type CartProps = {
   close: () => void;
 };
 
-export function Cart({ open, close }: CartProps) {
+export function Cart({ open: defaultOpen, close: defaultClose }: CartProps) {
+  const { close, open } = useToggleModal(defaultOpen, defaultClose);
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={close}>

@@ -12,7 +12,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   const cookieHeader = request.headers.get("Cookie");
   const isLogged = await cookieUserToken.parse(cookieHeader);
 
-  console.log({ isLogged });
   if (isLogged) return redirect("/");
 
   return { isLogged: false };
