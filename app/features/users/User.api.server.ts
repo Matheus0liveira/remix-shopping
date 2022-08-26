@@ -12,10 +12,9 @@ class UserService {
     if (!(await bcrypt.compare(password, user.password)))
       throw new Response("Password not matchs", { status: 401 });
 
-    return jwt.sign(
-      { id: user.id, email: user.email, name: user.name },
-      process.env.JWT_SECRET!
-    );
+    const payload = { id: user.id, email: user.email, name: user.name };
+
+    return jwt.sign(payload, process.env.JWT_SECRET!);
   }
 }
 
