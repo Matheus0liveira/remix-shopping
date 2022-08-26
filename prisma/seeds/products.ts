@@ -8,9 +8,12 @@ export async function createProduct(prisma: PrismaClient) {
       data: {
         name: faker.commerce.product(),
         imageSrc: faker.image.food(),
-        totalPrice: +faker.commerce.price(),
+        totalPrice: +faker.commerce.price(100),
+        promoPrice: faker.datatype.boolean()
+          ? +faker.commerce.price(100)
+          : null,
         totalQuantity: +faker.random.numeric(),
-        description: faker.lorem.sentences(3),
+        description: faker.lorem.sentences(7),
       },
     });
     console.log(product);
