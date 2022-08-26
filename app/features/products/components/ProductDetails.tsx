@@ -1,42 +1,28 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
-import { StarIcon } from "@heroicons/react/solid";
 import { classNames } from "~/shared";
+import type { Type } from "..";
+import { formatNumberToCurrencyBRL } from "~/utils/currency";
 
-const product = {
-  id: Math.random(),
-  name: "Basic Tee 6-Pack ",
-  price: "$192",
-  rating: 3.9,
-  reviewCount: 117,
-  href: "#",
-  imageSrc:
-    "https://tailwindui.com/img/ecommerce-images/product-quick-preview-02-detail.jpg",
-  imageAlt: "Two each of gray, white, and black shirts arranged on table.",
-  colors: [
-    { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
-    { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
-    { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
-  ],
-  sizes: [
-    { name: "XXS", inStock: true },
-    { name: "XS", inStock: true },
-    { name: "S", inStock: true },
-    { name: "M", inStock: true },
-    { name: "L", inStock: true },
-    { name: "XL", inStock: true },
-    { name: "XXL", inStock: true },
-    { name: "XXXL", inStock: false },
-  ],
-};
+import { useToggleModal } from "~/hooks/";
 
 export type ProductDetailsProps = {
   open: boolean;
   close: () => void;
+  product: Type.Products.Product;
 };
 
-export function ProductDetails({ open, close }: ProductDetailsProps) {
+export function ProductDetails({
+  open: defaultOpen,
+  close: defaultClose,
+  product,
+}: ProductDetailsProps) {
+  const { close, open } = useToggleModal(defaultOpen, defaultClose);
+  const formatedTotalPrice = formatNumberToCurrencyBRL(product.totalPrice);
+  const formatedPromoPrice =
+    product.promoPrice && formatNumberToCurrencyBRL(product.promoPrice);
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={close}>
@@ -78,7 +64,7 @@ export function ProductDetails({ open, close }: ProductDetailsProps) {
                     <div className="aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5">
                       <img
                         src={product.imageSrc}
-                        alt={product.imageAlt}
+                        alt={product.name}
                         className="object-center object-cover"
                       />
                     </div>
@@ -93,12 +79,24 @@ export function ProductDetails({ open, close }: ProductDetailsProps) {
                         <h3 id="information-heading" className="sr-only">
                           Product information
                         </h3>
-
-                        <p className="text-2xl text-gray-900">
-                          {product.price}
-                        </p>
-
-                        {/* Reviews */}
+                        <div className="flex gap-x-4 items-end mt-2">
+                          <p className={classNames("text-2xl text-gray-900")}>
+                            {formatedPromoPrice ?? formatedTotalPrice}
+                          </p>
+                          {!!formatedPromoPrice && (
+                            <p
+                              className={classNames(
+                                "text-gray-900",
+                                formatedPromoPrice
+                                  ? "line-through text-slate-500 text-sm"
+                                  : "no-underline text-2xl"
+                              )}
+                            >
+                              {formatedTotalPrice}
+                            </p>
+                          )}
+                        </div>
+                        {/* Reviews
                         <div className="mt-6">
                           <h4 className="sr-only">Reviews</h4>
                           <div className="flex items-center">
@@ -107,7 +105,8 @@ export function ProductDetails({ open, close }: ProductDetailsProps) {
                                 <StarIcon
                                   key={rating}
                                   className={classNames(
-                                    product.rating > rating
+                                    product.starsCount &&
+                                      product.starsCount > rating
                                       ? "text-gray-900"
                                       : "text-gray-200",
                                     "h-5 w-5 flex-shrink-0"
@@ -116,16 +115,16 @@ export function ProductDetails({ open, close }: ProductDetailsProps) {
                                 />
                               ))}
                             </div>
-                            <p className="sr-only">
-                              {product.rating} out of 5 stars
-                            </p>
                             <a
                               href="#!"
                               className="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
                             >
-                              {product.reviewCount} reviews
+                              {product.starsCount} reviews
                             </a>
                           </div>
+                        </div> */}
+                        <div className="mt-4 text-slate-500">
+                          <p>{product.description}</p>
                         </div>
                       </section>
 
@@ -133,10 +132,6 @@ export function ProductDetails({ open, close }: ProductDetailsProps) {
                         aria-labelledby="options-heading"
                         className="mt-10"
                       >
-                        <h3 id="options-heading" className="sr-only">
-                          Product options
-                        </h3>
-
                         <form
                           action={`/products/${product.id}/cart/new`}
                           method="POST"

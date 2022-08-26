@@ -1,10 +1,11 @@
 import { Link } from "@remix-run/react";
 import { classNames } from "~/shared";
+import { formatNumberToCurrencyBRL } from "~/utils/currency";
 
 export type ProductItemProps = {
   title: string;
-  price: string;
-  promoPrice?: string;
+  price: number;
+  promoPrice?: number | null;
   imageSrc: string;
   imageAlt: string;
   href?: string;
@@ -18,6 +19,9 @@ export function ProductItem({
   title,
   href,
 }: ProductItemProps) {
+  const formatedPrice = formatNumberToCurrencyBRL(price);
+  const formatedPromoPrice =
+    promoPrice && formatNumberToCurrencyBRL(promoPrice);
   return (
     <Link to={href || ""} prefetch="intent">
       <div className="bg-white">
@@ -50,10 +54,10 @@ export function ProductItem({
                       promoPrice ? "line-through" : "no-underline"
                     )}
                   >
-                    {price}
+                    {formatedPrice}
                   </span>
                 )}
-                <span>{promoPrice ?? price}</span>
+                <span>{formatedPromoPrice ?? formatedPrice}</span>
               </div>
             </div>
           </div>
