@@ -1,89 +1,32 @@
-import { Outlet } from "@remix-run/react";
+import type { LoaderFunction } from "@remix-run/node";
+import { Outlet, useLoaderData } from "@remix-run/react";
 import { ProductItem } from "~/features/products";
 import { ProductList } from "~/features/products/components/ProductList";
+import { db } from "~/utils/db.server";
+
+export const loader = async () => {
+  const products = await db.products.findMany();
+
+  return { products };
+};
 
 export default function () {
+  const { products } = useLoaderData<typeof loader>();
   return (
     <>
       <Outlet />
       <ProductList>
-        <ProductItem
-          title="Basic Tee"
-          price="$35"
-          promoPrice="$20"
-          imageAlt="Front of men&#039;s Basic Tee in black."
-          imageSrc="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-          href="1/details"
-        />
-        <ProductItem
-          title="Basic Tee"
-          price="$35"
-          imageAlt="Front of men&#039;s Basic Tee in black."
-          imageSrc="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-        />
-        <ProductItem
-          title="Basic Tee"
-          price="$35"
-          promoPrice="$35"
-          imageAlt="Front of men&#039;s Basic Tee in black."
-          imageSrc="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-        />
-        <ProductItem
-          title="Basic Tee"
-          price="$35"
-          promoPrice="$35"
-          imageAlt="Front of men&#039;s Basic Tee in black."
-          imageSrc="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-        />
-        <ProductItem
-          title="Basic Tee"
-          price="$35"
-          promoPrice="$35"
-          imageAlt="Front of men&#039;s Basic Tee in black."
-          imageSrc="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-        />
-        <ProductItem
-          title="Basic Tee"
-          price="$35"
-          promoPrice="$35"
-          imageAlt="Front of men&#039;s Basic Tee in black."
-          imageSrc="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-        />
-        <ProductItem
-          title="Basic Tee"
-          price="$35"
-          promoPrice="$35"
-          imageAlt="Front of men&#039;s Basic Tee in black."
-          imageSrc="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-        />
-        <ProductItem
-          title="Basic Tee"
-          price="$35"
-          promoPrice="$35"
-          imageAlt="Front of men&#039;s Basic Tee in black."
-          imageSrc="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-        />
-        <ProductItem
-          title="Basic Tee"
-          price="$35"
-          promoPrice="$35"
-          imageAlt="Front of men&#039;s Basic Tee in black."
-          imageSrc="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-        />
-        <ProductItem
-          title="Basic Tee"
-          price="$35"
-          promoPrice="$35"
-          imageAlt="Front of men&#039;s Basic Tee in black."
-          imageSrc="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-        />
-        <ProductItem
-          title="Basic Tee"
-          price="$35"
-          promoPrice="$35"
-          imageAlt="Front of men&#039;s Basic Tee in black."
-          imageSrc="https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg"
-        />
+        {products.map((product) => (
+          <ProductItem
+            key={product.id}
+            title={product.name}
+            price={`${product.totalPrice}`}
+            promoPrice={`${product.promoPrice}`}
+            imageAlt={product.name}
+            imageSrc={product.imageSrc}
+            href={`${product.id}/details`}
+          />
+        ))}
       </ProductList>
     </>
   );

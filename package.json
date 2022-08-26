@@ -22,8 +22,13 @@
     "@tailwindcss/forms": "^0.5.2",
     "@vercel/node": "^2.4.4",
     "bcrypt": "^5.0.1",
+    "jsonwebtoken": "^8.5.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.34.2",
+    "remix-domains": "^0.3.2",
+    "remix-forms": "^0.17.4-test.0",
+    "zod": "^3.18.0"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.4.0",
@@ -31,6 +36,7 @@
     "@remix-run/eslint-config": "^1.6.8",
     "@remix-run/serve": "^1.6.8",
     "@types/bcrypt": "^5.0.0",
+    "@types/jsonwebtoken": "^8.5.9",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "autoprefixer": "^10.4.8",
