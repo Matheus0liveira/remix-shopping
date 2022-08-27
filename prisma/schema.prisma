@@ -38,13 +38,14 @@ model Carts {
   id         String            @id @default(uuid())
   user       Users             @relation(fields: [userId], references: [id])
   products   CartsOnProducts[]
-  userId     String
+  userId     String            @unique
   totalValue Int
   updatedAt  DateTime          @updatedAt
   createdAt  DateTime          @default(now())
 }
 
 model CartsOnProducts {
+  id         String   @id @default(uuid())
   product    Products @relation(fields: [productId], references: [id])
   productId  String
   cart       Carts    @relation(fields: [cartId], references: [id])
@@ -52,6 +53,4 @@ model CartsOnProducts {
   assignedAt DateTime @default(now())
   updatedAt  DateTime @updatedAt
   createdAt  DateTime @default(now())
-
-  @@id([cartId, productId])
 }
