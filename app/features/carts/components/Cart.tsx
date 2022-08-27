@@ -3,38 +3,22 @@ import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
 import { CartProductItem } from "./CartProductItem";
 import { useToggleModal } from "~/hooks";
-
-const products = [
-  {
-    id: 1,
-    name: "Throwback Hip Bag",
-    href: "/products/1/details",
-    price: "$90.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
-    imageAlt:
-      "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
-  },
-  {
-    id: 2,
-    name: "Medium Stuff Satchel",
-    href: "/products/1/details",
-    price: "$32.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
-    imageAlt:
-      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
-  },
-];
+import type { Type } from "..";
+import { formatNumberToCurrencyBRL } from "~/utils/currency";
 
 export type CartProps = {
   open: boolean;
   close: () => void;
+  products: Type.Carts.ProductWithQuantity[];
+  totalValue: number;
 };
 
-export function Cart({ open: defaultOpen, close: defaultClose }: CartProps) {
+export function Cart({
+  open: defaultOpen,
+  close: defaultClose,
+  products,
+  totalValue,
+}: CartProps) {
   const { close, open } = useToggleModal(defaultOpen, defaultClose);
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -100,7 +84,7 @@ export function Cart({ open: defaultOpen, close: defaultClose }: CartProps) {
                     <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
-                        <p>$262.00</p>
+                        <p>{formatNumberToCurrencyBRL(totalValue)}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
                         Shipping and taxes calculated at checkout.
