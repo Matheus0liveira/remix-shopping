@@ -34,16 +34,18 @@ CREATE TABLE "Carts" (
 
 -- CreateTable
 CREATE TABLE "CartsOnProducts" (
+    "id" TEXT NOT NULL PRIMARY KEY,
     "productId" TEXT NOT NULL,
     "cartId" TEXT NOT NULL,
     "assignedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    PRIMARY KEY ("cartId", "productId"),
     CONSTRAINT "CartsOnProducts_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Products" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "CartsOnProducts_cartId_fkey" FOREIGN KEY ("cartId") REFERENCES "Carts" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Users_email_key" ON "Users"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Carts_userId_key" ON "Carts"("userId");
