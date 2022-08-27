@@ -7,10 +7,8 @@ class UserService {
   async login({ email, password }: Type.Users.Login) {
     const user = await db.users.findUnique({ where: { email } });
 
-    if (!user) throw new Response("User not found", { status: 404 });
-
-    if (!(await bcrypt.compare(password, user.password)))
-      throw new Response("Password not matchs", { status: 401 });
+    if (!user || !(await bcrypt.compare(password, user.password)))
+      throw new Error("password/email not match");
 
     const payload = { id: user.id, email: user.email, name: user.name };
 
