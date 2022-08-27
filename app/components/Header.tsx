@@ -17,7 +17,7 @@ export const navigation = [
 ];
 export const userNavigation = [
   { name: "Your Profile", to: "user" },
-  { name: "Sign out", to: "#" },
+  { name: "Sign out", to: "/user/signout" },
 ];
 
 export function Header() {
