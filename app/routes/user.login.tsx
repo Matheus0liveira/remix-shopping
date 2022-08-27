@@ -6,19 +6,17 @@ import { performMutation } from "remix-forms";
 import { schemas } from "~/features/users";
 import { API } from "~/features/users";
 import { UserLogin } from "~/features/users";
-import { cookieUserToken } from "~/features/users/utils/cookies.server";
+import { cookies } from "~/features/users";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const cookieHeader = request.headers.get("Cookie");
-  const isLogged = await cookieUserToken.parse(cookieHeader);
+  const token = await cookies.getToken(request);
 
-  if (isLogged) return redirect("/");
+  if (token) return redirect("/");
 
   return { isLogged: false };
 };
 
 const mutation = makeDomainFunction(schemas.login)(async (values) => {
-  console.log({ values });
   const token = await API.userService.login(values);
 
   return { token };
@@ -37,15 +35,11 @@ export const action: ActionFunction = async ({ request }) => {
 
   return json(result, {
     headers: {
-      "Set-Cookie": await cookieUserToken.serialize(result.data.token),
+      "Set-Cookie": await cookies.cookieUserToken.serialize({
+        token: result.data.token,
+      }),
     },
   });
-
-  // if (result.success) {
-  //   const { token } = result.data;
-  // }
-
-  // return { ok: true };
 };
 
 export default function () {

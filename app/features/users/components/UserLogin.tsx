@@ -1,4 +1,4 @@
-import { useTransition } from "@remix-run/react";
+import { Link, useTransition } from "@remix-run/react";
 import { Form } from "remix-forms";
 import { schemas } from "..";
 
@@ -14,7 +14,7 @@ export function UserLogin() {
     >
       {({ Field, Errors, Button }) => (
         <div className="max-w-md w-full space-y-8">
-          <div>
+          <Link to="/products">
             <img
               className="mx-auto h-12 w-auto"
               src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
@@ -23,7 +23,7 @@ export function UserLogin() {
             <h2 className="mt-6 text-center text-3xl tracking-tight font-bold text-gray-900">
               Sign in to your account
             </h2>
-          </div>
+          </Link>
           <div className="rounded-md shadow-sm -space-y-px">
             <Field name="email">
               {({ SmartInput, Errors, Label }) => (
@@ -56,7 +56,7 @@ export function UserLogin() {
               )}
             </Field>
           </div>
-          <Errors />
+          <Errors className="text-red-400 text-sm mt-1" />
           <Button
             disabled={isSubmitting}
             type="submit"
